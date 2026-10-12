@@ -536,19 +536,6 @@ Questions:
 3. The bronze CSVs are read from S3 on every run of this notebook. Cache `users_bronze` and `orders_bronze` with `.cache()` after the first read, and check the **Spark UI** (`http://localhost:4040`) to see the effect on later stages.
 4. Append one new order to `lab.silver.orders` with `writeTo(...).append()`. List the snapshots of the table, then read the table as it was before the append, with `VERSION AS OF` in Spark SQL. Do the same with the Parquet directory and explain the difference.
 
-## Cleanup
-
-Remove the objects of the silver layer and of the Iceberg warehouse. The objects of the bronze layer are kept for the
-next modules.
-
-```bash
-aws s3 --profile 'default' rm "s3://$LAB_BUCKET_NAME/silver/" --recursive
-aws s3 --profile 'default' rm "s3://$LAB_BUCKET_NAME/warehouse/" --recursive
-aws s3 --profile 'default' ls "s3://$LAB_BUCKET_NAME/" --recursive
-#> 2026-09-14 11:02:10     331568 bronze/orders.csv
-#> 2026-09-14 11:02:09       7351 bronze/users.csv
-```
-
 Stop the Spark session:
 
 ```python
